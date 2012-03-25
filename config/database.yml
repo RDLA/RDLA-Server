@@ -1,8 +1,0 @@
-development:
-  adapter: sqlite3
-  database: database/development.sqlite
-  timeout: 5000
-production:
-  adapter: sqlite3
-  database: database/production.sqlite
-  timeout: 5000

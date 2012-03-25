@@ -166,7 +166,6 @@ class Player < ActiveResource::Base
   
   def self.save_all
      Player.online.each do |id,player|
-      Server.log.debug "#{player.name}:#{player.posx}/#{player.posy}"
       player.save
     end
   end
