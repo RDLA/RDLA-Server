@@ -1,16 +1,15 @@
 #encoding: utf-8
-class Player < ActiveRecord::Base
+class Player < ActiveResource::Base
+  self.site = CONFIG["db_url"]
   @@online_player = {}
   @@online_ws = {}
   @@online_map = {}
-  attr_accessor :websocket
-  attr_accessible :map, :name, :posx, :posy, :map_id, :visual_acuity
-  
-  belongs_to :map
+  attr_accessor :websocket 
   
   def get_fields()
     Map.online_find(self.map_id).get_terraform(posx,posy,visual_acuity+1)
   end
+  
   def get_players()
     list_player_sent = Array.new
     ((posy-visual_acuity-1)..(posy+visual_acuity+1)).each do |y|
@@ -45,7 +44,7 @@ class Player < ActiveRecord::Base
   		  cposx = self.posx - 1 if direction == "/LEFT"
 		  cposx = self.posx + 1 if direction == "/RIGHT"
 		  cposy = self.posy - 1 if direction == "/UP"
-		  cposy = self.posy + 1 if direction == "/DOWN"
+		  cposy = self.posy+ 1 if direction == "/DOWN"
   		!@@online_map.include?("#{cposx}/#{cposy}/#{self.map_id}")
   end
    def find_available_position()
@@ -123,6 +122,7 @@ class Player < ActiveRecord::Base
     @@online_player.delete player.id
     @@online_ws.delete player.websocket
     @@online_map.delete "#{player.posx}/#{player.posy}/#{player.map_id}"
+    Player.broadcast "#{player.name} vient de se déconnecter."
     player.save
     player
     end
@@ -137,6 +137,7 @@ class Player < ActiveRecord::Base
     end
     
     unless player.blank?
+   
       if Player.online?(player)
         response = "/ERR_ALREADY_LOGGED"
       else

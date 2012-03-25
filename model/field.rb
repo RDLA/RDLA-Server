@@ -1,4 +1,4 @@
-class Field < ActiveRecord::Base
-  has_many :maps  
-  validates :color, :presence => true
+class Field < ActiveResource::Base
+  self.site = CONFIG["db_url"]
+  
 end

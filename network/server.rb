@@ -1,37 +1,34 @@
 class Server
    @@log = nil
-   attr_accessor :config, :db_config, :maps
+  
+   attr_accessor :maps
   
   def initialize()
-    puts "Load configuration file..."
-    load_config
-
+   
     puts "Set log information..."
     set_log
-
-    @@log.info("Try to connect to database...")
-    connect_database
-    @@log.info("Connected to database.")
+    ActiveResource::Base.logger = @@log
     
-    @@log.info("Load map...")
+     @@log.info("Load map...")
     preload_maps
     @@log.info("Map loaded.")
-    
   end
   
   
   def run
+  
+  
     @@log.info("Server starting...")
     EventMachine.run do
  
-    EventMachine.add_periodic_timer(@config["saving_timer"].to_i) do
+    EventMachine.add_periodic_timer(CONFIG["saving_timer"].to_i) do
       @@log.debug 'Save Information to database'
       t = Thread.new {
         Player.save_all
       }
       t.priority = -1
     end
-    EventMachine::WebSocket.start(:host => config['host'], :port => config['port'], :debug => config['debug']) do |ws|
+    EventMachine::WebSocket.start(:host => CONFIG['host'], :port => CONFIG['port'], :debug => CONFIG['debug']) do |ws|
       ws.onopen do
         @@log.info 'User connected'
         ws.send "/WAIT_AUTH"
@@ -53,22 +50,14 @@ class Server
   end #run
 
 
-  def load_config
-    begin
-      @config = YAML::load(IO.read('config/global.yml'))
-      @db_config = YAML::load(IO.read('config/database.yml'))
-    rescue
-      puts $!
-      exit
-    end
-  end
+
   
   def set_log
-    if @config["env"] == "development"
+    if CONFIG["env"] == "development"
       @@log = Logger.new(STDOUT)
       @@log.level = Logger::DEBUG
     else
-      @@log = Logger.new("#{config["env"]}.log")
+      @@log = Logger.new("#{CONFIG["env"]}.log")
       @@log.level = Logger::WARN
     end
   end
@@ -78,14 +67,7 @@ class Server
   
 
   
-  def connect_database
-    begin
-    ActiveRecord::Base.establish_connection(@db_config[@config['env']])
-    ActiveRecord::Base.logger = @@log
-    rescue
-      @@log.fatal("Error when connecting to database: #{$!}")
-    end
-  end
+
   
   def preload_maps
     

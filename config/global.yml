@@ -3,3 +3,4 @@ port: 8081
 env : 'development'
 debug: 'true'
 saving_timer: 80
+db_url: 'http://mistral.rdla.fr/api/'
