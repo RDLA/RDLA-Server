@@ -1,6 +1,12 @@
-host: 0.0.0.0
-port: 8081
-env : 'development'
-debug: 'true'
-saving_timer: 80
-db_url: 'http://mistral.rdla.fr/api/'
+development:
+  host: 0.0.0.0
+  port: 8081
+  debug: 'true'
+  saving_timer: 80
+  db_url: 'http://mistral.rdla.fr/api/'
+production:
+  host: 0.0.0.0
+  port: 8081
+  debug: 'false'
+  saving_timer: 80
+  db_url: 'http://mistral.rdla.fr/api/'

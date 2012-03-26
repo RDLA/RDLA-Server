@@ -19,6 +19,7 @@ class Server
   
   
     @@log.info("Server starting...")
+   
     EventMachine.run do
  
     EventMachine.add_periodic_timer(CONFIG["saving_timer"].to_i) do

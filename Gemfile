@@ -6,3 +6,4 @@ gem 'sqlite3'
 gem "eventmachine"
 gem 'em-websocket'
 gem 'flash_policy_server'
+gem 'god'
