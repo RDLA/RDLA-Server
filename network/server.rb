@@ -36,6 +36,7 @@ class Server
       end
       
       ws.onmessage do |cmd|
+        cmd = cmd.force_encoding('UTF-8') #Try to fix problem of crash.
         c = Command.new(cmd,ws)
         c.run
       end #ws.onmessage
