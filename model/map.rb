@@ -34,7 +34,6 @@ class Map < ActiveResource::Base
     @@list
   end
   def self.preload
-    #TODO: To test : 12.1.2 Nested Associations Hash in ruby on rails guide
     @@list = Map.all
     @@list.each do |map|
       @@list_id[map.id] = map

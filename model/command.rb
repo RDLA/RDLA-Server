@@ -26,8 +26,6 @@ class Command
             	end
             	
             end
-            
-
       elsif @cmd == "/LIST"
             Player.refresh
       elsif @cmd[0,12] == "/INFO player"
@@ -38,11 +36,13 @@ class Command
 		  		response = {:id => p.id, :name => p.name}.to_json
 		  		ws.send "/INFO_PLAYER #{response}"
       		end
-      	 elsif @cmd[0,4] == "/des"
+      elsif @cmd[0,4] == "/des"
          dice_str = @cmd[5..@cmd.length]
          dice = Dice.new(dice_str)
          dice.roll
          Player.broadcast "#{sender.name} a fait #{dice.result} sur un lancer de #{dice.str}" unless dice.result == 0	
+      elsif @cmd == "/RELOAD_MAPS"
+         Map.preload   
       end
          
     elsif @cmd[0,11] == "/LOG player" 
