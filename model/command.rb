@@ -43,6 +43,7 @@ class Command
          Player.broadcast "#{sender.name} a fait #{dice.result} sur un lancer de #{dice.str}" unless dice.result == 0	
       elsif @cmd == "/RELOAD_MAPS"
          Map.preload   
+         ws.send "/MAP_RELOADED"
       end
          
     elsif @cmd[0,11] == "/LOG player" 
