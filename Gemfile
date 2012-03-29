@@ -7,3 +7,4 @@ gem "eventmachine"
 gem 'em-websocket'
 gem 'flash_policy_server'
 gem 'god'
+gem 'rmagick'

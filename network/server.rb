@@ -9,9 +9,12 @@ class Server
     set_log
     ActiveResource::Base.logger = @@log
     
-     @@log.info("Load map...")
+    @@log.info("Load map...")
     preload_maps
     @@log.info("Map loaded.")
+    @@log.info("Generate Field Sprite...")
+    Field.generate_sprites
+    @@log.info("Sprite Generated!")
   end
   
   

@@ -172,8 +172,8 @@ class Player < ActiveResource::Base
   
   def self.refresh
     Player.online.each do |id,player|
-              player.websocket.send"/LIST_PLAYERS #{player.get_players.to_json}"
-              player.websocket.send"/LIST_FIELDS #{player.get_fields.to_json}"
+              player.websocket.send "/LIST_PLAYERS #{player.get_players.to_json}"
+              player.websocket.send "/LIST_FIELDS #{player.get_fields.to_json}"
                 
             end
   end
