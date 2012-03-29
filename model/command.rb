@@ -47,7 +47,7 @@ class Command
       elsif @cmd == "/RELOAD_SPRITES"
          Server.log.info("Generate Field Sprite...")
          Field.generate_sprites
-         Server.info("Sprite Generated!")
+         Server.log.info("Sprite Generated!")
          ws.send "/SPRITES_RELOADED"
       end
          
