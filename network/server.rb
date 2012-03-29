@@ -12,9 +12,7 @@ class Server
     @@log.info("Load map...")
     preload_maps
     @@log.info("Map loaded.")
-    @@log.info("Generate Field Sprite...")
-    Field.generate_sprites
-    @@log.info("Sprite Generated!")
+
   end
   
   

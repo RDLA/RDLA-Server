@@ -44,6 +44,11 @@ class Command
       elsif @cmd == "/RELOAD_MAPS"
          Map.preload   
          ws.send "/MAP_RELOADED"
+      elsif @cmd == "/RELOAD_SPRITES"
+         @@log.info("Generate Field Sprite...")
+         Field.generate_sprites
+         @@log.info("Sprite Generated!")
+         ws.send "/SPRITES_RELOADED"
       end
          
     elsif @cmd[0,11] == "/LOG player" 

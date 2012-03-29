@@ -17,8 +17,8 @@ class Field < ActiveResource::Base
     ftp.connect(CONFIG['ftp_url'],21)
     ftp.login(ENV['FTP_USER'],ENV['FTP_PASSWORD'])
     ftp.chdir("assets")
-    image.write "#{Rails.root}/tmp/field.png"
-    ftp.putbinaryfile("#{Rails.root}/tmp/field.png", "field.png")
+    image.write "#{ROOT_PATH}/tmp/field.png"
+    ftp.putbinaryfile("#{ROOT_PATH}/tmp/field.png", "field.png")
     ftp.close
     true
   end
