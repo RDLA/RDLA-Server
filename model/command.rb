@@ -45,9 +45,9 @@ class Command
          Map.preload   
          ws.send "/MAP_RELOADED"
       elsif @cmd == "/RELOAD_SPRITES"
-         @@log.info("Generate Field Sprite...")
+         Server.log.info("Generate Field Sprite...")
          Field.generate_sprites
-         @@log.info("Sprite Generated!")
+         Server.info("Sprite Generated!")
          ws.send "/SPRITES_RELOADED"
       end
          
