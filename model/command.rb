@@ -15,7 +15,6 @@ class Command
       elsif ["/LEFT","/RIGHT","/DOWN","/UP"].include?(@cmd)
             #Player want to move.
             sender.move(@cmd)
-            #Player.refresh
             Player.online.each do |id,player|
             	if player != sender
             		player.websocket.send "/MOVE #{@cmd.delete('/')} #{sender.id}"

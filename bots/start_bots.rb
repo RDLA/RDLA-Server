@@ -8,7 +8,7 @@ message = (ws.receive)[0]
   if message == "/WAIT_AUTH"
     puts "Waiting log"
     ws.send("/LOG player 6")
-  elsif message[0..11] == "/YOUR_PLAYER"
+  elsif message[0..11] == "/INFO_PLAYER"
     is_connected = true
     ws.send("Bouyah! Vous allez tous mourir!")
   else 

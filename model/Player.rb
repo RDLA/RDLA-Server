@@ -145,7 +145,11 @@ class Player < ActiveResource::Base
         Player.connect(player)
         Server.log.info "#{player.name}(ID:#{player.id}) connected"
         Player.broadcast "#{player.name} vient de se connecter."
-        response = "/YOUR_PLAYER #{player.to_json}"
+        
+        player.websocket.send "/LIST_PLAYERS #{player.get_players.to_json}"
+        player.websocket.send "/LIST_FIELDS #{player.get_fields.to_json}"
+        
+        response = "/INFO_PLAYER #{player.to_json}"
         Player.online.each do |id,player_i|
         	Player.send_player_info(player,player_i)
         	Player.send_player_info(player_i,player)
