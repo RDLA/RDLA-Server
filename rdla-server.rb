@@ -1,4 +1,5 @@
 #encoding: utf-8
+$stdout.sync = true
 puts "Please wait while loading library..."
 #----------------------------------------------------- 
 #                  INCLUDE
