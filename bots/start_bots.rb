@@ -1,6 +1,6 @@
 #ruby start_bots.rb > /dev/null &
 require_relative "Websocket.rb"
-ws = WebSocket.new("ws://home.rdla.fr:8081")
+ws = WebSocket.new("ws://localhost:8081")
 is_connected = false
 step = 0
 while true

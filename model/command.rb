@@ -32,14 +32,14 @@ class Command
       		if(p.blank?)
       			ws.send "/ERR_PLAYER_NOT_FOUND"
       		else
-		  		response = {:id => p.id, :name => p.name}.to_json
+		  		response = p.to_json
 		  		ws.send "/INFO_PLAYER #{response}"
       		end
       elsif @cmd[0,4] == "/des"
          dice_str = @cmd[5..@cmd.length]
          dice = Dice.new(dice_str)
          dice.roll
-         Player.broadcast "#{sender.name} a fait #{dice.result} sur un lancer de #{dice.str}" unless dice.result == 0	
+         Player.broadcast "/MSG_DICE #{sender.name} #{dice.result} #{dice.str}" unless dice.result == 0	
       elsif @cmd == "/RELOAD_MAPS"
          Map.preload   
          ws.send "/MAP_RELOADED"
@@ -54,15 +54,13 @@ class Command
           #Looking for player
           response = Player.login(@cmd[12..@cmd.length].to_i, @ws)
           ws.send response
-
           if response == "/ERR_ALREADY_LOGGED"
-         
             @ws.close_connection 
           else
-          	
             Player.refresh
-          
-        	end
+            p = Player.online_find(@cmd[12..@cmd.length].to_i)
+            Player.broadcast "/MSG_LOGIN #{p.name}"
+          end
  
        
     end

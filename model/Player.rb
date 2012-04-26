@@ -122,7 +122,7 @@ class Player < ActiveResource::Base
     @@online_player.delete player.id
     @@online_ws.delete player.websocket
     @@online_map.delete "#{player.posx}/#{player.posy}/#{player.map_id}"
-    Player.broadcast "#{player.name} vient de se déconnecter."
+    
     player.save
     player
     end
@@ -144,7 +144,7 @@ class Player < ActiveResource::Base
       	player.websocket = ws
         Player.connect(player)
         Server.log.info "#{player.name}(ID:#{player.id}) connected"
-        Player.broadcast "#{player.name} vient de se connecter."
+        
         
         player.websocket.send "/LIST_PLAYERS #{player.get_players.to_json}"
         player.websocket.send "/LIST_FIELDS #{player.get_fields.to_json}"
@@ -154,7 +154,7 @@ class Player < ActiveResource::Base
         	Player.send_player_info(player,player_i)
         	Player.send_player_info(player_i,player)
         end # Player.online.each
-          	
+        
       end # Player.online?
     
     end # player.blank?

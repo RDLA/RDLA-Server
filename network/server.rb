@@ -45,6 +45,7 @@ class Server
       ws.onclose do
         player = Player.disconnect(ws)
         Player.refresh
+        Player.broadcast "/MSG_LOGOUT #{player.name}" unless player.blank?
         @@log.info "#{player.name} disconnected" rescue  @@log.info "User disconnected"   
       end
       
